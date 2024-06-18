@@ -3,6 +3,7 @@ package com.example.ems_app.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.math.BigDecimal;
 
@@ -13,6 +14,8 @@ import java.math.BigDecimal;
 @Builder
 @FieldNameConstants
 @Table(name="employee")
+@jakarta.persistence.Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "employeeCache")
 public class Employee {
 
     @Id

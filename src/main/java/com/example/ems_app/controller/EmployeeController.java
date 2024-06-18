@@ -16,23 +16,23 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
-      return ResponseEntity.ok(employeeService.findAll());
+        return ResponseEntity.ok(employeeService.findAll());
     };
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        return ResponseEntity.ok(employeeService.save(employeeDTO));
+        return ResponseEntity.ok(employeeService.create(employeeDTO));
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO employeeDTO) {
         return ResponseEntity.ok(employeeService.update(id, employeeDTO));
     }

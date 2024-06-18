@@ -1,6 +1,7 @@
 package com.example.ems_app.service.impl;
 
 import com.example.ems_app.dto.EmployeeDTO;
+import com.example.ems_app.exception.BadRequestException;
 import com.example.ems_app.exception.NotFoundException;
 import com.example.ems_app.model.Employee;
 import com.example.ems_app.repository.EmployeeRepository;
@@ -27,18 +28,33 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDTO findById(Long id) {
-        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new NotFoundException("Employee not found"));
+        Employee employee = employeeRepository.findById(id).orElseThrow(() ->
+                new NotFoundException(String.format("Employee with id %s not found", id)));
         return convertToDto(employee);
     }
 
     @Override
-    public EmployeeDTO save(EmployeeDTO employeeDTO) {
+    public EmployeeDTO findByEmail(String email) {
+        Employee employee = employeeRepository.findByEmail(email).orElseThrow(() ->
+                new NotFoundException(String.format("Employee with email %s not found", email)));
+        return convertToDto(employee);
+    }
+
+    @Override
+    public EmployeeDTO create(EmployeeDTO employeeDTO) {
+        if(employeeRepository.existsByEmail(employeeDTO.getEmail())) {
+            throw new BadRequestException("Email already exists");
+        }
         return convertToDto(employeeRepository.save(employeeDTO.convertToModel()));
     }
 
     @Override
     public EmployeeDTO update(Long id, EmployeeDTO employeeDTO) {
         EmployeeDTO existingEmployeeDTO = findById(id);
+
+        if(isEmailTakenByAnotherUser(existingEmployeeDTO, employeeDTO.getEmail())) {
+            throw new BadRequestException("The email you are trying to enter is already taken by another user.");
+        }
 
         existingEmployeeDTO.setFirstName(employeeDTO.getFirstName());
         existingEmployeeDTO.setLastName(employeeDTO.getLastName());
@@ -51,6 +67,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void delete(Long id) {
-        employeeRepository.deleteById(id);
+        EmployeeDTO existingEmployeeDTO = findById(id);
+        employeeRepository.deleteById(existingEmployeeDTO.getId());
+    }
+
+    // helping
+    public boolean isEmailTakenByAnotherUser(EmployeeDTO firstEmployeeDTO, String email) {
+
+        // in this block im checking if new email already exists with another user
+        if (employeeRepository.existsByEmail(email)) {
+            EmployeeDTO anotherEmployeeDTO = findByEmail(email);
+            if (!anotherEmployeeDTO.getId().equals(firstEmployeeDTO.getId())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

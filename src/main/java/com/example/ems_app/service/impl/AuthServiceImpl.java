@@ -3,12 +3,14 @@ package com.example.ems_app.service.impl;
 import com.example.ems_app.dto.LoginRequestDTO;
 import com.example.ems_app.dto.LoginResponseDTO;
 import com.example.ems_app.dto.UserDTO;
+import com.example.ems_app.exception.BadRequestException;
 import com.example.ems_app.exception.UnauthorizedException;
 import com.example.ems_app.repository.UserRepository;
 import com.example.ems_app.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,13 +43,16 @@ public class AuthServiceImpl implements AuthService {
             return LoginResponseDTO.builder()
                     .accessToken(jwtService.generateToken(userDetails))
                     .build();
-        } catch (UnauthorizedException e) {
-            throw new UnauthorizedException("Authentication failed. Please check your credentials.");
+        } catch (AuthenticationException e) {
+            throw new UnauthorizedException("Authentication failed. Please check your credentials.", e);
         }
     }
 
     @Override
     public UserDTO register(UserDTO userDTO) {
+        if(userRepository.existsByUsername(userDTO.getUsername())) {
+            throw new BadRequestException("Username is already in use.");
+        }
         String password = userDTO.getPassword();
         userDTO.setPassword(passwordEncoder.encode(password));
         return convertToDto(userRepository.save(userDTO.convertToModel()));

@@ -56,4 +56,69 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="4" author="stjepanoviccc">
+        <addUniqueConstraint
+                columnNames="username"
+                constraintName="unique_username"
+                tableName="user"/>
+    </changeSet>
+
+    <changeSet id="5" author="stjepanoviccc">
+        <addUniqueConstraint
+                columnNames="email"
+                constraintName="unique_email"
+                tableName="employee"/>
+    </changeSet>
+
+    <changeSet id="6" author="stjepanoviccc">
+        <renameColumn tableName="employee" oldColumnName="firstName" newColumnName="first_name" columnDataType="varchar(255)" />
+        <renameColumn tableName="employee" oldColumnName="lastName" newColumnName="last_name" columnDataType="varchar(255)" />
+    </changeSet>
+
+    <changeSet id="7" author="stjepanoviccc">
+        <dropColumn tableName="employee" columnName="created_at" />
+        <addColumn tableName="employee">
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="8" author="stjepanoviccc">
+        <createTable tableName="audit_log">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="action" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="9" author="stjepanoviccc">
+        <addColumn tableName="audit_log">
+            <column name="success" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="10" author="stjepanoviccc">
+        <dropColumn tableName="audit_log" columnName="entity_id" />
+        <addColumn tableName="audit_log">
+            <column name="entity_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/employees")
@@ -114,7 +116,7 @@ public class EmployeeController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        return ResponseEntity.ok(employeeService.create(employeeDTO));
+        return ResponseEntity.status(CREATED).body(employeeService.create(employeeDTO));
     }
 
     @PutMapping("/{id}")

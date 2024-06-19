@@ -23,7 +23,4 @@ public interface EmployeeService {
     EmployeeDTO create(EmployeeDTO employeeDTO);
     EmployeeDTO update(Long id, EmployeeDTO employeeDTO);
     void delete(Long id);
-
-    // helping
-    boolean isEmailTakenByAnotherUser(EmployeeDTO employeeDTO, String email);
 }

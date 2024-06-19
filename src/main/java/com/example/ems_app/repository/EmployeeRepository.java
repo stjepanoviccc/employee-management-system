@@ -19,12 +19,16 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query("SELECT e " +
             "FROM Employee e " +
-            "WHERE e.salary = (SELECT MAX(e.salary) FROM Employee e)")
+            "WHERE e.salary = (SELECT MAX(e2.salary) FROM Employee e2) " +
+            "ORDER BY e.id ASC " +
+            "LIMIT 1")
     Optional<Employee> findEmployeeByHighestSalary();
 
     @Query("SELECT e " +
             "FROM Employee e " +
-            "WHERE e.salary = (SELECT MIN(e.salary) FROM Employee e)")
+            "WHERE e.salary = (SELECT MIN(e2.salary) FROM Employee e2) " +
+            "ORDER BY e.id ASC " +
+            "LIMIT 1")
     Optional<Employee> findEmployeeByLowestSalary();
 
     @Query("SELECT e " +

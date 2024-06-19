@@ -121,4 +121,12 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="11" author="stjepanoviccc">
+        <addColumn tableName="audit_log">
+            <column name="error_message" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

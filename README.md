@@ -51,14 +51,16 @@ Unauthorized user can only login and register, USER role can get employee by id 
 
 ## Testing:  
 The Employee Management System API has been thoroughly tested to ensure reliability and functionality across its features. Both integration and unit tests were conducted using frameworks such as MockMvc, JUnit, Mockito, and others. Below is an overview of the testing approach:  
+
 **Unit Tests**  
-Unit tests were implemented to test individual components, methods, and classes in isolation. These tests validate the correctness of business logic and ensure that each unit behaves as expected.
-1. JUnit: Used for writing and executing unit tests.
-2. Mockito: Employed for mocking dependencies and verifying interactions between components.
-   
+Unit tests were implemented to test individual components, methods, and classes in isolation. These tests validate the correctness of business logic and ensure that each unit behaves as expected.   
+
 **Integration Tests**
-Integration tests were conducted to verify the interaction between various components within the application, ensuring that integrated units function correctly as a whole. 
+Integration tests were conducted to verify the interaction between various components within the application, ensuring that integrated units function correctly as a whole.  
+
 1. MockMvc: Utilized for testing the entire application stack, including controllers, service layer, and repository layer, in a controlled environment.
+2. JUnit: Used for writing and executing unit tests.
+3. Mockito: Employed for mocking dependencies and verifying interactions between components.
 
 ## Deploy:  
 ### Dockerfile  

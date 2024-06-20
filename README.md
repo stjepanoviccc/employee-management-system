@@ -52,9 +52,12 @@ CompanyMerchant is a junction table for identifying which category is connected 
 Transaction entity is persisting all transactions that are happening in the app and it doesn’t mean it is successful or unsuccessful.  
 
 ## Error Handling:  
-**Global Exception Handling**: Spring Boot's global exception handling mechanism is employed to manage and respond to exceptions effectively throughout the application. This ensures consistency and reliability in handling various types of errors  .
+**Global Exception Handling**: Spring Boot's global exception handling mechanism is employed to manage and respond to exceptions effectively throughout the application. This ensures consistency and reliability in handling various types of errors.
 **NotFoundException**: For model-related errors, such as when a requested resource is not found, the application utilizes a custom NotFoundException. This exception is thrown when attempting to access a resource that does not exist, providing clear feedback to the client.  
-**BadRequestException**: In cases of technical errors or invalid requests, the application employs BadRequestException. This exception is used to indicate problems with the client's request, such as malformed input or missing parameters. By utilizing this exception, the application can provide meaningful error messages and guide clients towards resolving their requests.
+**BadRequestException**: In cases of technical errors or invalid requests, the application employs BadRequestException. This exception is used to indicate problems with the client's request, such as malformed input or missing parameters. By utilizing this exception, the application can provide meaningful error messages and guide clients towards resolving their requests.  
+**UnauthorizedException**: When a client attempts to access a resource without proper authentication or authorization, the application throws UnauthorizedException. This exception signals that the request lacks the necessary credentials or permissions to perform the operation, prompting clients to authenticate or obtain appropriate authorization.
+
+
 
 ## Testing:  
 

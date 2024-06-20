@@ -43,30 +43,24 @@ There are two different roles in this app **(USER, ADMIN)**.
 You can check config file in **config/SecurityConfiguration.java**. As you can see, all requests for swagger and auth endpoints are allowed so there won't be Unauthorized exception.  
 Unauthorized user can only login and register, USER role can get employee by id and get all employees, while ADMIN role can do everything.
 
-## Database:  
-There are several entities in the database: **User**, **Card**, **Company**, **Merchant**, CompanyCategory (junction), CompanyMerchant (junction), **Discount** and **Transaction**.  
-On creation, each user will get one card with a unique card number and will be able to add/remove funds from the card. So there is a one to one mapping here.  
-Companies can have multiple users and multiple merchants but also merchants can be connected to multiple companies.   
-CompanyCategory is a junction table for identifying which category is connected to a company. This is most important for standard users because they can use only benefits from merchant categories which are connected with their company.  
-CompanyMerchant is a junction table for identifying which category is connected to a specific merchant. This is most important for platinum users because they can have a special Discount for that merchant.  
-Transaction entity is persisting all transactions that are happening in the app and it doesn’t mean it is successful or unsuccessful.  
-
 ## Error Handling:  
 **Global Exception Handling**: Spring Boot's global exception handling mechanism is employed to manage and respond to exceptions effectively throughout the application. This ensures consistency and reliability in handling various types of errors.  
 **NotFoundException**: For model-related errors, such as when a requested resource is not found, the application utilizes a custom NotFoundException. This exception is thrown when attempting to access a resource that does not exist, providing clear feedback to the client.  
 **BadRequestException**: In cases of technical errors or invalid requests, the application employs BadRequestException. This exception is used to indicate problems with the client's request, such as malformed input or missing parameters. By utilizing this exception, the application can provide meaningful error messages and guide clients towards resolving their requests.  
 **UnauthorizedException**: When a client attempts to access a resource without proper authentication or authorization, the application throws UnauthorizedException. This exception signals that the request lacks the necessary credentials or permissions to perform the operation, prompting clients to authenticate or obtain appropriate authorization.
 
-
-
 ## Testing:  
-
-I've implemented over 30 unit tests across all services in this project.  
-These unit tests are designed to ensure the functionality of individual components in isolation.  
-Mockito is used to mock dependencies, allowing us to isolate the units under test.
+The Employee Management System API has been thoroughly tested to ensure reliability and functionality across its features. Both integration and unit tests were conducted using frameworks such as MockMvc, JUnit, Mockito, and others. Below is an overview of the testing approach:  
+**Unit Tests**  
+Unit tests were implemented to test individual components, methods, and classes in isolation. These tests validate the correctness of business logic and ensure that each unit behaves as expected.
+1. JUnit: Used for writing and executing unit tests.
+2. Mockito: Employed for mocking dependencies and verifying interactions between components.
+   
+**Integration Tests**
+Integration tests were conducted to verify the interaction between various components within the application, ensuring that integrated units function correctly as a whole. 
+1. MockMvc: Utilized for testing the entire application stack, including controllers, service layer, and repository layer, in a controlled environment.
 
 ## Deploy:  
-
 ### Dockerfile  
 **Base Image**: This Dockerfile starts by using the OpenJDK 17 base image as the foundation for the application.  
 **Volume Configuration**: It sets up a volume at /tmp within the container to store temporary files.  

@@ -24,7 +24,8 @@ Navigate to root of your project and run **docker-compose up --build** and your 
 **NOTE**: If you get problem with build, you may need to kill services on your local machine for rabbitmq and postgres. In order to do that you need next set of commands:  
 **Linux**:  
 1. sudo lsof -i :PORT_NUMBER
-2. sudo kill -9 PID  
+2. sudo kill -9 PID
+   
 **Windows**:
 1. netstat -ano | findstr :PORT_NUMBER
 2. tasklist /FI "PID eq PID_NUMBER"

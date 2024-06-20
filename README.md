@@ -35,13 +35,13 @@ In order to do that you need next set of commands:
 
 ## API Documentation
 The API is documented using Swagger. Once the application is running, you can access the Swagger UI at: **http://localhost:8080/swagger-ui.html**  
-Swagger UI provides a user-friendly interface for exploring and testing the API endpoints.
+Swagger UI provides a user-friendly interface for exploring and testing the API endpoints. To check details for API documentation you can access **swagger-ui**.
 
 ## Spring Security:  
 In this project I implemented **JWT(Json Web Token)** for Authentication.  
-There are two different roles in this app (USER, ADMIN).  
+There are two different roles in this app **(USER, ADMIN)**.  
 You can check config file in **config/SecurityConfiguration.java**. As you can see, all requests for swagger and auth endpoints are allowed so there won't be Unauthorized exception.  
-Unauthorized user can only login and register USER role can get employee by id and get all employees, while ADMIN role can do everything.
+Unauthorized user can only login and register, USER role can get employee by id and get all employees, while ADMIN role can do everything.
 
 ## Database:  
 There are several entities in the database: **User**, **Card**, **Company**, **Merchant**, CompanyCategory (junction), CompanyMerchant (junction), **Discount** and **Transaction**.  

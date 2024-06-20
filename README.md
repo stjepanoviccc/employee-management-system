@@ -12,7 +12,7 @@
 ![MockMVC](https://img.shields.io/badge/MockMVC-brightgreen?logo=mockmvc&logoColor=white)
 
 ## Technologies Used
-Main technologies which are used in this project are **Spring Boot**, **Spring Data JPA**, **Spring Security**, for database its **Postgres** with **Liquibase** for versioning. For message queue I used **RabbitMQ** and API is documented with **Swagger**. For testing I used **Mockito**, **Mock MVC** and **JUnit**  and for containerization is **Docker**
+Main technologies which are used in this project are **Spring Boot**, **Hibernate**, **Spring Security**, for database its **Postgres** with **Liquibase** for versioning. For message queue I used **RabbitMQ** and API is documented with **Swagger**. For testing I used **Mockito**, **Mock MVC** and **JUnit**  and for containerization is **Docker**
 
 ## Overview:  
 The Employee Management System is a web application that allows users to perform CRUD operations (Create, Read, Update, Delete) on employee records.  
@@ -33,21 +33,17 @@ In order to do that you need next set of commands:
 2. tasklist /FI "PID eq PID_NUMBER"
 3. taskkill /PID PID_NUMBER /F
 
-## API Documentation and Postman  
-Docs: https://documenter.getpostman.com/view/26096728/2sA3JFBQbq  
-Collection and Enviroment: https://github.com/stjepanoviccc/benefit-card-payment-processor/tree/develop/bcpp/src/main/resources.   
-There is mini-documentation for using postman and how to set it up inside of the collection.  
+## API Documentation
+The API is documented using Swagger. Once the application is running, you can access the Swagger UI at: **http://localhost:8080/swagger-ui.html**  
+Swagger UI provides a user-friendly interface for exploring and testing the API endpoints.
 
 ## Spring Security:  
-
 In this project I implemented **JWT(Json Web Token)** for Authentication.  
-There are three different roles in this app (Standard,Platinum and Premium). Since there isn't a role for the Administrator in specification, Initialization Data is free access and you don’t need to be authorised to do that (this is a testing environment not production).   
-For usage of transactions and adding and removing funds from the card I used authorization for any role.  
-Also it's important to take note about transactions, there is one endpoint which all users can access but in TransactionServiceImpl, I implemented JwtService for extracting roles and based on that role different ways of processing transactions is called.  
-There wasn’t much to do with Spring Security in this project but I still wanted to implement it.  
+There are two different roles in this app (USER, ADMIN).  
+You can check config file in **config/SecurityConfiguration.java**. As you can see, all requests for swagger and auth endpoints are allowed so there won't be Unauthorized exception.  
+Unauthorized user can only login and register USER role can get employee by id and get all employees, while ADMIN role can do everything.
 
 ## Database:  
-
 There are several entities in the database: **User**, **Card**, **Company**, **Merchant**, CompanyCategory (junction), CompanyMerchant (junction), **Discount** and **Transaction**.  
 On creation, each user will get one card with a unique card number and will be able to add/remove funds from the card. So there is a one to one mapping here.  
 Companies can have multiple users and multiple merchants but also merchants can be connected to multiple companies.   
@@ -56,8 +52,6 @@ CompanyMerchant is a junction table for identifying which category is connected 
 Transaction entity is persisting all transactions that are happening in the app and it doesn’t mean it is successful or unsuccessful.  
 
 ## Error Handling:  
-
-For Error Handling I used SpringBoot’s global exception mechanism. I did setup for more exceptions but in this project I was using only these two(NotFoundException, BadRequestException).  
 **Global Exception Handling**: Spring Boot's global exception handling mechanism is employed to manage and respond to exceptions effectively throughout the application. This ensures consistency and reliability in handling various types of errors  .
 **NotFoundException**: For model-related errors, such as when a requested resource is not found, the application utilizes a custom NotFoundException. This exception is thrown when attempting to access a resource that does not exist, providing clear feedback to the client.  
 **BadRequestException**: In cases of technical errors or invalid requests, the application employs BadRequestException. This exception is used to indicate problems with the client's request, such as malformed input or missing parameters. By utilizing this exception, the application can provide meaningful error messages and guide clients towards resolving their requests.

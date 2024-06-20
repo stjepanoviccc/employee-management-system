@@ -2,6 +2,7 @@ package com.example.ems_app.service;
 
 import com.example.ems_app.dto.EmployeeCriteriaDTO;
 import com.example.ems_app.dto.EmployeeDTO;
+import com.example.ems_app.model.Employee;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,4 +24,7 @@ public interface EmployeeService {
     EmployeeDTO create(EmployeeDTO employeeDTO);
     EmployeeDTO update(Long id, EmployeeDTO employeeDTO);
     void delete(Long id);
+
+    // init data helper
+    List<Employee> initData();
 }

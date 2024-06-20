@@ -171,7 +171,30 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(existingEmployeeDTO.getId());
     }
 
+
     // helping
+    public List<Employee> initData() {
+        List<Employee> existingEmployees = employeeRepository.findAll();
+        if (existingEmployees.isEmpty()) {
+            List<Employee> employeesToSave = Arrays.asList(
+                    new Employee(1L, "John", "Max", "john@gmail.com", "Software Developer",
+                            BigDecimal.valueOf(10000), "Dep A"),
+                    new Employee(2L, "Alan", "Ford", "alan@gmail.com", "Software Developer",
+                            BigDecimal.valueOf(15000), "Dep A"),
+                    new Employee(3L, "Will", "Smith", "will@gmail.com", "HR",
+                            BigDecimal.valueOf(20000), "Dep A"),
+                    new Employee(4L, "Jana", "Jana", "jana@gmail.com", "Software Developer",
+                            BigDecimal.valueOf(40000), "Dep B"),
+                    new Employee(5L, "Mila", "Kunis", "mila@gmail.com", "HR",
+                            BigDecimal.valueOf(40000), "Dep B")
+            );
+            employeeRepository.saveAll(employeesToSave);
+            return employeesToSave;
+        } else {
+            throw new BadRequestException("Data init failed because mployees table is not empty");
+        }
+    }
+
     public boolean isEmailTakenByAnotherUser(EmployeeDTO firstEmployeeDTO, String email) {
 
         // in this block im checking if new email already exists with another user

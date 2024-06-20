@@ -1,6 +1,7 @@
 package com.example.ems_app.dto;
 
 import com.example.ems_app.model.User;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +14,14 @@ import lombok.NoArgsConstructor;
 public class UserDTO {
 
     private Long id;
+
+    @Schema(description = "Username of the user", example = "admin")
     private String username;
+
+    @Schema(description = "Password of the user", example = "password")
     private String password;
+
+    @Schema(description = "Roles assigned to the user", example = "ROLE_ADMIN")
     private String roles;
 
     public static UserDTO convertToDto(User user) {

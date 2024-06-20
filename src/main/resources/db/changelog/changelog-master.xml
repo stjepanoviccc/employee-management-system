@@ -121,6 +121,7 @@
         </addColumn>
     </changeSet>
 
+    <!-- when running locally comment this set out -->
     <changeSet id="11" author="stjepanoviccc">
         <addColumn tableName="audit_log">
             <column name="error_message" type="varchar(255)">

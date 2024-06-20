@@ -1,4 +1,4 @@
-# Employee Management System Api
+# Employee Management System API
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-black?logo=springboot)
 ![Spring Security](https://img.shields.io/badge/Spring%20Security-black?logo=springsecurity)
 ![Swagger](https://img.shields.io/badge/Swagger-green?logo=swagger&logoColor=white)
@@ -15,7 +15,7 @@
 Main technologies which are used in this project are **Spring Boot**, **Hibernate**, **Spring Security**, for database its **Postgres** with **Liquibase** for versioning. For message queue I used **RabbitMQ** and API is documented with **Swagger**. For testing I used **Mockito**, **Mock MVC** and **JUnit**  and for containerization is **Docker**
 
 ## Overview:  
-The Employee Management System is a web application that allows users to perform CRUD operations (Create, Read, Update, Delete) on employee records.  
+The Employee Management System is a web api that allows users to perform CRUD operations (Create, Read, Update, Delete) on employee records.  
 It includes user authentication and authorization, logging with AOP, message queue communication, advanced querying with Hibernate, and database versioning with Liquibase. The application will be containerized using Docker.
 
 ## Getting Started:  

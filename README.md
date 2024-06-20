@@ -19,7 +19,7 @@ The Employee Management System is a web api that allows users to perform CRUD op
 It includes user authentication and authorization, logging with AOP, message queue communication, advanced querying with Hibernate, and database versioning with Liquibase. The application will be containerized using Docker.
 
 ## Getting Started:  
-To start this project you need to have installed **Docker**.  
+To start this project you need to have installed **Docker** and **Docker Compose**.  
 Navigate to root of your project and run **docker-compose up --build** and your app should start.  
 
 **NOTE**: If you get problem with build, you may need to kill services on your local machine for rabbitmq and postgres.  
@@ -68,7 +68,7 @@ Integration tests were conducted to verify the interaction between various compo
 
 ## Deploy:  
 ### Dockerfile  
-Dockerfile utilizes multistage builds to optimize the build and runtime environments for the application. Here's a breakdown of each section and its purpose:  
+The multistage Dockerfile for this application optimizes the Docker image build process by leveraging separate stages for build and runtime environments. This approach enhances efficiency, security, and maintainability of the Docker image, adhering to best practices for Java application deployment in Docker containers.  
 
 **BUILD STAGE**:  
 
@@ -76,41 +76,58 @@ Dockerfile utilizes multistage builds to optimize the build and runtime environm
 **Working Directory: /app**: Sets the working directory within the container where the application source code will be copied and built.  
 **Copy Files**: Copies pom.xml and the entire src directory into the container.    
 **Build Application**: Executes mvn clean package -DskipTests to build the application. It cleans build enviroment, then package and skip tests during build process to speed up process.  
-**Entry Point**: Finally, it specifies the command to execute when the Docker container starts, which is to run the Java application using the java -jar command and passing the path to the JAR file (/bcpp.jar). 
-This Dockerfile simplifies the deployment process of the bcpp application by encapsulating it into a Docker image, making it easier to manage and deploy across different environments.  
 
 **RUNTIME STAGE**:  
+
 **Base Image: openjdk:17-jdk-slim**: This stage starts with a minimal OpenJDK 17 image, optimized for runtime.  
 **Volume:**: Defines a volume mount point at /tmp, allowing the application to write temporary files inside the container.    
 **Copy Artifact**: Copies the built JAR file (app/target/*.jar) from the build stage into the current runtime stage, renaming it to app.jar.      
 **Entry Point**: Defines the command to run when the container starts. java -jar /app.jar executes the JAR file as the main application entry point.  
 
 ### docker-compose.yml  
-This docker-compose.yml file is used to define and manage the services required for the bcpp (Benefit Card Payment Processor) application using Docker Compose.  
 
-**Services**:  
+This Docker Compose file defines a multi-container setup for an Employee Management System (EMS) application, including PostgreSQL for the database, RabbitMQ for messaging, Swagger UI for API documentation, and the EMS application itself. Here's an explanation of each section:  
+
+### Services:  
 
 **psql-db**:    
-**Image**: Specifies the Docker image to be used, which in this case is postgres.  
-**Container Name**: Defines the name of the container as psql-db.  
-**Restart Policy**: Sets the restart policy to always, ensuring that the container restarts automatically if it stops unexpectedly.  
-**Environment Variables**: Configures environment variables required for PostgreSQL:  
-**POSTGRES_USER**: Specifies the PostgreSQL username as postgres.  
-**POSTGRES_PASSWORD**: Specifies the password for the PostgreSQL user as root.  
-**POSTGRES_DB**: Specifies the name of the PostgreSQL database as bcpp.  
-**Ports Mapping**: Maps port 5432 of the host machine to port 5432 of the PostgreSQL container, allowing access to the PostgreSQL service from outside the container.  
 
-**bcpp**:  
-**Container Name**: Specifies the name of the container as bcpp_app.  
-**Build Configuration**: Defines the build context and Dockerfile location for building the Docker image of the bcpp application.  
-**Ports Mapping**: Maps port 8081 of the host machine to port 8080 of the bcpp application container, enabling access to the application from outside the container.  
-**Environment Variables**: Sets up environment variables required for the Spring Boot application:  
-**SPRING_DATASOURCE_URL**: Specifies the JDBC URL to connect to the PostgreSQL database.  
-**SPRING_DATASOURCE_USERNAME**: Specifies the username for connecting to the PostgreSQL database as postgres.  
-**SPRING_DATASOURCE_PASSWORD**: Specifies the password for connecting to the PostgreSQL database as root.  
-**SPRING_JPA_HIBERNATE_DDL_AUTO**: Configures Hibernate to update the database schema automatically (update) based on the entity mappings.  
-**Dependencies**: Defines that the bcpp application container depends on the psql-db service, ensuring that the PostgreSQL service is started before the application container.  
-This docker-compose.yml file simplifies the deployment and management of the bcpp application and its dependencies by defining them as services within a single configuration file.  
+**Image**: Uses the official PostgreSQL image.  
+**Environment Variables**: Configures environment variables required for PostgreSQL:  
+1. **POSTGRES_USER**: Specifies the PostgreSQL username as postgres.  
+2. **POSTGRES_PASSWORD**: Specifies the password for the PostgreSQL user as root.  
+3. **POSTGRES_DB**: Specifies the name of the PostgreSQL database as ems_db.  
+**Ports Mapping**: Maps port 5432 of the host machine to port 5432 of the PostgreSQL container, allowing access to the PostgreSQL service from outside the container.
+**Volumes**: Mounts a volume (db_data) to persist PostgreSQL data.
+
+**rabbitmq**:  
+
+**Image**: Uses the official RabbitMQ image with management plugins.  
+**Ports**:  
+1. **5672**: RabbitMQ default port for AMQP.
+2. **15672**: RabbitMQ management UI port.  
+
+**swagger**:  
+
+**Image**: Uses the Swagger UI image from **swaggerapi**.  
+**Ports**: Maps host port 8090 to container port 8080 for Swagger UI.  
+**Enviroment Variables**:  
+1. **SWAGGER_JSON**: Specifies the location of the Swagger JSON file **/api-docs/swagger.json**.
+2. **BASE_URL**: Sets the base URL for Swagger UI **/swagger-ui**.
+
+**app**:  
+
+**Build**: Builds the EMS application using the Dockerfile (Dockerfile) in the current context .  
+**Ports**: Maps host port 8080 to container port 8080 for the EMS application.  
+**Enviroment Variables**:  
+1. **SPRING_DATASOURCE_URL**: JDBC URL to connect to PostgreSQL (jdbc:postgresql://psql-db:5432/ems_db).
+2. **SPRING_DATASOURCE_USERNAME**: PostgreSQL username (postgres).
+3. **SPRING_DATASOURCE_PASSWORD**: PostgreSQL password (root).
+4. **SPRING_JPA_HIBERNATE_DDL_AUTO**: Hibernate DDL auto strategy (none to disable automatic schema generation).  
+**Depends On**: Specifies dependencies on psql-db, rabbitmq, and swagger services.  
+**Command**: Executes Maven test (./mvnw test) command when starting the container.
+
+**NOTE**: Ensure that **Docker** and **Docker Compose** are installed on your system and that there are no conflicts with ports already in use by other applications. Adjust configurations as needed based on your specific development environment and requirements.
 
 ## Author
 

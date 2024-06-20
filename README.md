@@ -1,6 +1,6 @@
 # Employee Management System Api
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-white?logo=springboot)
-![Spring Security](https://img.shields.io/badge/Spring%20Security-white?logo=springsecurity)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-black?logo=springboot)
+![Spring Security](https://img.shields.io/badge/Spring%20Security-black?logo=springsecurity)
 ![Swagger](https://img.shields.io/badge/Swagger-green?logo=swagger&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue?logo=postgresql&logoColor=white)
 ![Hibernate](https://img.shields.io/badge/Hibernate-red?logo=hibernate&logoColor=white)

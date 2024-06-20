@@ -6,10 +6,10 @@
 ![Hibernate](https://img.shields.io/badge/Hibernate-red?logo=hibernate&logoColor=white)
 ![Liquibase](https://img.shields.io/badge/Liguibase-brightgreen?logo=junit&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-blue?logo=docker&logoColor=white)
-![Docker](https://img.shields.io/badge/RabbitMQ-green?logo=docker&logoColor=white)
+![RabbitMQ](https://img.shields.io/badge/RabbitMQ-green?logo=rabbitmq&logoColor=white)
 ![Mockito](https://img.shields.io/badge/Mockito-yellow?logo=mockito&logoColor=white)
 ![JUnit](https://img.shields.io/badge/JUnit-brightgreen?logo=junit&logoColor=white)
-![MockMVC](https://img.shields.io/badge/JUnit-brightgreen?logo=junit&logoColor=white)
+![MockMVC](https://img.shields.io/badge/MockMVC-brightgreen?logo=mockmvc&logoColor=white)
 
 ## Technologies Used
 Main technologies which are used in this project are **Spring Boot**, **Spring Data JPA**, **Spring Security**, for database its **Postgres** and platform for sending APIs **Postman**. For testing I used **Mockito** and **JUnit** and for containerization is **Docker**

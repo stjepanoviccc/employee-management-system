@@ -90,7 +90,7 @@ This Docker Compose file defines a multi-container setup for an Employee Managem
 
 ### Services:  
 
-**psql-db**:    
+**1. psql-db**:    
 
 **Image**: Uses the official PostgreSQL image.  
 **Environment Variables**: Configures environment variables required for PostgreSQL:  
@@ -100,14 +100,14 @@ This Docker Compose file defines a multi-container setup for an Employee Managem
 **Ports Mapping**: Maps port 5432 of the host machine to port 5432 of the PostgreSQL container, allowing access to the PostgreSQL service from outside the container.
 **Volumes**: Mounts a volume (db_data) to persist PostgreSQL data.
 
-**rabbitmq**:  
+**2. rabbitmq**:  
 
 **Image**: Uses the official RabbitMQ image with management plugins.  
 **Ports**:  
 1. **5672**: RabbitMQ default port for AMQP.
 2. **15672**: RabbitMQ management UI port.  
 
-**swagger**:  
+**3. swagger**:  
 
 **Image**: Uses the Swagger UI image from **swaggerapi**.  
 **Ports**: Maps host port 8090 to container port 8080 for Swagger UI.  
@@ -115,7 +115,7 @@ This Docker Compose file defines a multi-container setup for an Employee Managem
 1. **SWAGGER_JSON**: Specifies the location of the Swagger JSON file **/api-docs/swagger.json**.
 2. **BASE_URL**: Sets the base URL for Swagger UI **/swagger-ui**.
 
-**app**:  
+**4. app**:  
 
 **Build**: Builds the EMS application using the Dockerfile (Dockerfile) in the current context .  
 **Ports**: Maps host port 8080 to container port 8080 for the EMS application.  

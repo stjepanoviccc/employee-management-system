@@ -21,6 +21,7 @@ It includes user authentication and authorization, logging with AOP, message que
 ## Getting Started:  
 To start this project you need to have installed **Docker**.  
 Navigate to root of your project and run **docker-compose up --build** and your app should start.  
+
 **NOTE**: If you get problem with build, you may need to kill services on your local machine for rabbitmq and postgres.  
 In order to do that you need next set of commands:  
 
@@ -45,8 +46,11 @@ Unauthorized user can only login and register, USER role can get employee by id 
 
 ## Error Handling:  
 **Global Exception Handling**: Spring Boot's global exception handling mechanism is employed to manage and respond to exceptions effectively throughout the application. This ensures consistency and reliability in handling various types of errors.  
+
 **NotFoundException**: For model-related errors, such as when a requested resource is not found, the application utilizes a custom NotFoundException. This exception is thrown when attempting to access a resource that does not exist, providing clear feedback to the client.  
+
 **BadRequestException**: In cases of technical errors or invalid requests, the application employs BadRequestException. This exception is used to indicate problems with the client's request, such as malformed input or missing parameters. By utilizing this exception, the application can provide meaningful error messages and guide clients towards resolving their requests.  
+
 **UnauthorizedException**: When a client attempts to access a resource without proper authentication or authorization, the application throws UnauthorizedException. This exception signals that the request lacks the necessary credentials or permissions to perform the operation, prompting clients to authenticate or obtain appropriate authorization.
 
 ## Testing:  

@@ -21,7 +21,8 @@ It includes user authentication and authorization, logging with AOP, message que
 ## Getting Started:  
 To start this project you need to have installed **Docker**.  
 Navigate to root of your project and run **docker-compose up --build** and your app should start.  
-**NOTE**: If you get problem with build, you may need to kill services on your local machine for rabbitmq and postgres. In order to do that you need next set of commands:  
+**NOTE**: If you get problem with build, you may need to kill services on your local machine for rabbitmq and postgres.  
+In order to do that you need next set of commands:  
 
 **Linux**:  
 1. sudo lsof -i :PORT_NUMBER

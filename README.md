@@ -12,19 +12,23 @@
 ![MockMVC](https://img.shields.io/badge/MockMVC-brightgreen?logo=mockmvc&logoColor=white)
 
 ## Technologies Used
-Main technologies which are used in this project are **Spring Boot**, **Spring Data JPA**, **Spring Security**, for database its **Postgres** and platform for sending APIs **Postman**. For testing I used **Mockito** and **JUnit** and for containerization is **Docker**
+Main technologies which are used in this project are **Spring Boot**, **Spring Data JPA**, **Spring Security**, for database its **Postgres** with **Liquibase** for versioning. For message queue I used **RabbitMQ** and API is documented with **Swagger**. For testing I used **Mockito**, **Mock MVC** and **JUnit**  and for containerization is **Docker**
 
 ## Overview:  
-BenefitSeller is a company that issues payment cards for various company benefits. BenefitSeller partners with their customer companies, and issues cards for employees of the customer company.  
-Employees can use those cards to pay for various benefits selected by their company.  
-There are several categories of benefit merchants (Food and Drinks, Recreation, Education, Culture…) also there are three categories of users(**Standard**, **Premium** and **Platinum**).  
-**Standard** users can use benefits only from categories selected by their company.  
-**Premium** users can use all benefits from all BenefitSeller merchants.  
-**Platinum** users can use all benefits from all BenefitSeller merchants. Additionally, platinum users can achieve discounts for specific merchants selected by their company. This tier of users is especially good for companies that want to use discounts to promote specific products or services in their company.
+The Employee Management System is a web application that allows users to perform CRUD operations (Create, Read, Update, Delete) on employee records.  
+It includes user authentication and authorization, logging with AOP, message queue communication, advanced querying with Hibernate, and database versioning with Liquibase. The application will be containerized using Docker.
 
 ## Getting Started:  
-To start this project you need to have installed next things:  
-**IntelliJ IDEA**, **Java 17**, **PostgreSQL** database, **Postman** and **Docker**.
+To start this project you need to have installed **Docker**.  
+Navigate to root of your project and run **docker-compose up --build** and your app should start.  
+**NOTE**: If you get problem with build, you may need to kill services on your local machine for rabbitmq and postgres. In order to do that you need next set of commands:
+**Linux**:  
+1. sudo lsof -i :PORT_NUMBER
+2. sudo kill -9 PID
+**Windows**:
+1. netstat -ano | findstr :PORT_NUMBER
+2. tasklist /FI "PID eq PID_NUMBER"
+3. taskkill /PID PID_NUMBER /F
 
 ## API Documentation and Postman  
 Docs: https://documenter.getpostman.com/view/26096728/2sA3JFBQbq  
@@ -97,18 +101,6 @@ This docker-compose.yml file is used to define and manage the services required 
 **SPRING_JPA_HIBERNATE_DDL_AUTO**: Configures Hibernate to update the database schema automatically (update) based on the entity mappings.  
 **Dependencies**: Defines that the bcpp application container depends on the psql-db service, ensuring that the PostgreSQL service is started before the application container.  
 This docker-compose.yml file simplifies the deployment and management of the bcpp application and its dependencies by defining them as services within a single configuration file.  
-
-**START APP**:  
-It's important to make sure you have existing database source in *application.properties* so .jar file can be builded (it's because of jpa) so it's easiest for you to just manually create database bcpp_db in pgAdmin/any other dashboard and you don't need to configure anything else but if you want you can connect to any database because it will be overwritten with docker-compose.yaml ...  
-1. clone project  
-2. mvn clean  
-3. mvn package  
-1. navigate to root folder  
-2. use next command in terminal: **docker build . -t bcpp_v1**  
-3. use next command in terminal: **docker-compose up --build**  
-4. open postman collection provided in src/main/resources and set up enviroment  
-5. start sending requests from postman and responses will be created DTOs (you have documentation about postman)...  
-6. (optional): to check database in docker use next command in docker terminal:  **psql -h localhost -p 5432 -U postgres bcpp**  
 
 ## Author
 

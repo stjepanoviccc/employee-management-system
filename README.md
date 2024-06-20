@@ -68,12 +68,22 @@ Integration tests were conducted to verify the interaction between various compo
 
 ## Deploy:  
 ### Dockerfile  
-**Base Image**: This Dockerfile starts by using the OpenJDK 17 base image as the foundation for the application.  
-**Volume Configuration**: It sets up a volume at /tmp within the container to store temporary files.  
-**Exposed Port**: The Dockerfile exposes port 8080, which is the port on which the Spring Boot application will run.  
-**Application Copy**: It copies the compiled JAR file bcpp-0.0.1-SNAPSHOT.jar from the target directory of the application to the root directory of the Docker image, renaming it to bcpp.jar.  
+Dockerfile utilizes multistage builds to optimize the build and runtime environments for the application. Here's a breakdown of each section and its purpose:  
+
+**BUILD STAGE**:  
+
+**Base Image - maven:3.8.4-openjdk-17**: This stage starts with a Maven image that includes JDK 17, suitable for building Java applications.  
+**Working Directory: /app**: Sets the working directory within the container where the application source code will be copied and built.  
+**Copy Files**: Copies pom.xml and the entire src directory into the container.    
+**Build Application**: Executes mvn clean package -DskipTests to build the application. It cleans build enviroment, then package and skip tests during build process to speed up process.  
 **Entry Point**: Finally, it specifies the command to execute when the Docker container starts, which is to run the Java application using the java -jar command and passing the path to the JAR file (/bcpp.jar). 
 This Dockerfile simplifies the deployment process of the bcpp application by encapsulating it into a Docker image, making it easier to manage and deploy across different environments.  
+
+**RUNTIME STAGE**:  
+**Base Image: openjdk:17-jdk-slim**: This stage starts with a minimal OpenJDK 17 image, optimized for runtime.  
+**Volume:**: Defines a volume mount point at /tmp, allowing the application to write temporary files inside the container.    
+**Copy Artifact**: Copies the built JAR file (app/target/*.jar) from the build stage into the current runtime stage, renaming it to app.jar.      
+**Entry Point**: Defines the command to run when the container starts. java -jar /app.jar executes the JAR file as the main application entry point.  
 
 ### docker-compose.yml  
 This docker-compose.yml file is used to define and manage the services required for the bcpp (Benefit Card Payment Processor) application using Docker Compose.  

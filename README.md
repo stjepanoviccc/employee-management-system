@@ -129,9 +129,7 @@ This Docker Compose file defines a multi-container setup for an Employee Managem
 
 **NOTE**: Ensure that **Docker** and **Docker Compose** are installed on your system and that there are no conflicts with ports already in use by other applications. Adjust configurations as needed based on your specific development environment and requirements.
 
-## Author
-
-**Andrej Stjepanović**  
-Student at the **Faculty of Technical Sciences** in Novi Sad  
-Undergraduate of Software Engineering
+## Author  
+Andrej Stjepanović,  
+Software Developer
 
